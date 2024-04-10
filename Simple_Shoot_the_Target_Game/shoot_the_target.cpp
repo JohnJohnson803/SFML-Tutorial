@@ -16,6 +16,7 @@ int main()
 	hoop.setOutlineColor(sf::Color::Blue);
 
 	sf::CircleShape ball;
+	bool isShot = false;
 	ball.setRadius(30);
 	ball.setPosition(0, window.getSize().y - ball.getRadius() * 3);
 	ball.setFillColor(sf::Color::Red);
@@ -51,10 +52,26 @@ int main()
 			}
 
 			//Update Ball
-			ball.setPosition(sf::Mouse::getPosition(window).x, window.getSize().y - ball.getRadius() * 3);
+			
+			if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				isShot = true;
+			}
+
+			if(!isShot)
+				ball.setPosition(sf::Mouse::getPosition(window).x, window.getSize().y - ball.getRadius() * 3);
+			
+			else
+				ball.move(0, -5.f);
+
+			//Collision 
+			if(ball.getPosition().y <= 0 || ball.getGlobalBounds().intersects(hoop.getGlobalBounds()))
+			{
+				isShot = false;
+				ball.setPosition(window.getSize().x, window.getSize().y - ball.getRadius() * 3);
+			}
 
 			window.clear(sf::Color::White);
-
 			//Draw  
 			window.draw(hoop);
 			window.draw(ball);
