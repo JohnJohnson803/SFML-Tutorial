@@ -101,7 +101,7 @@ int main()
 				}
         }
 
-		for(size_t i=0; i<enemies.size(); i++)
+				for(size_t i=0; i<enemies.size(); i++)
 		{
 			window.draw(enemies[i]);
 		}
@@ -116,8 +116,7 @@ int main()
 					projectiles.erase(projectiles.begin() + i);
 					enemies.erase(enemies.begin() + j);
 				}
-			}
-		}
+			}		}
 		
 		window.display();
 	}
