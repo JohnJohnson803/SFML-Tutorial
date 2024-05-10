@@ -27,7 +27,7 @@ class Bullet
 	public:
 	sf::Sprite bullet;
 
-	Bullet(sf::Texture *texture, Player playerPosition)
+	Bullet(sf::Texture *texture, const Player &playerPosition)
 	{	
 		this->bullet.setTexture(*texture);
 		this->bullet.setScale(0.1f, 0.1f);
@@ -134,16 +134,19 @@ int main()
 		}
 
 		//Drawing and Moving enemies
-		for(size_t i=0; i<enemies.size(); i++)
+		for(size_t i=0; i<enemies.size();)
 		{
 			enemies[i].enemy.move(-5.f, 0);
 			window.draw(enemies[i].enemy);
 			//Enemy Collision with border and player 
 			if(enemies[i].enemy.getPosition().x + enemies[i].enemy.getGlobalBounds().width <= 0 || enemies[i].enemy.getGlobalBounds().intersects(p1.player.getGlobalBounds()))
 				enemies.erase(enemies.begin() + i);
+				else{
+					i++;
+				}
 		}
 
-		for(size_t i=0; i<missles.size(); i++)
+		for(size_t i=0; i<missles.size();)
 		{
 			missles[i].bullet.move(20.f, 0);
 			window.draw(missles[i].bullet);
@@ -151,6 +154,10 @@ int main()
 			{
 				enemies.erase(enemies.begin() + i);
 				missles.erase(missles.begin() + i);
+			}
+
+			else{
+				i++;
 			}
 		}
 
