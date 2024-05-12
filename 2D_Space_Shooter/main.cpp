@@ -9,11 +9,14 @@ class Player
 {
     public:
     sf::Sprite player;
+    int MaxHP = 20;
+    int HP;
 
     Player(sf::Texture &texture)
     {
         this->player.setTexture(texture);
         this->player.setScale(0.2f, 0.2f);
+        this->HP = this->MaxHP;
     }
 
     ~Player(){};
@@ -74,6 +77,10 @@ int main()
     Player p1(playerTexture);
     //Playet ShootTimer 
     int shootTimer = 0;
+    //Player Healthbar
+    sf::RectangleShape healthBar;
+    healthBar.setFillColor(sf::Color::Red);
+    healthBar.setSize(sf::Vector2f(p1.player.getGlobalBounds().width, 10.f));
 
     //Create Bullet Texture
     sf::Texture bulletTexture;
@@ -109,6 +116,10 @@ int main()
             p1.player.move(-5.f, 0.f);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move player right
             p1.player.move(5.f, 0);
+        
+        healthBar.setPosition(p1.player.getPosition().x, p1.player.getPosition().y + p1.player.getGlobalBounds().height + 30);
+        std::cout << (p1.player.getGlobalBounds().width) << std::endl;
+        
 
         //Player movement domain
         if(p1.player.getPosition().y <= 0) // Top Border
@@ -232,6 +243,7 @@ int main()
         }
         
         window.draw(p1.player);
+        window.draw(healthBar);
         window.display();
     }
 
